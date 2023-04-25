@@ -22,30 +22,30 @@ import useStatusNotification from 'src/components/errors/useStatusNotification'
 
 const getStatusObj = (status: ProjectStatus) =>
   match(status)
-    .with({ SqlError: P._ }, () =>
-      ({ title: 'SQL Error', color: 'error' as const })
-    )
-    .with({ RustError: P._ }, () => {
-      ({ title: 'Rust Error', color: 'error' as const })
+    .with({ SqlError: P._ }, () => {
+      return { title: 'SQL Error', color: 'error' as const }
     })
-    .with({ SystemError: P._ }, () =>
-      ({ title: 'System Error', color: 'error' as const })
-    )
-    .with('Pending', () =>
-      ({ title: 'Compiling', color: 'primary' as const })
-    )
-    .with('CompilingSql', () =>
-      ({ title: 'Compiling', color: 'primary' as const })
-    )
-    .with('CompilingRust', () =>
-      ({ title: 'Building Pipeline', color: 'primary' as const })
-    )
-    .with('Success', () =>
-      ({ title: 'Ready', color: 'success' as const })
-    )
-    .with('None', () =>
-      ({ title: 'Unused', color: 'primary' as const })
-    )
+    .with({ RustError: P._ }, () => {
+      return { title: 'Rust Error', color: 'error' as const }
+    })
+    .with({ SystemError: P._ }, () => {
+      return { title: 'System Error', color: 'error' as const }
+    })
+    .with('Pending', () => {
+      return { title: 'Compiling', color: 'primary' as const }
+    })
+    .with('CompilingSql', () => {
+      return { title: 'Compiling', color: 'primary' as const }
+    })
+    .with('CompilingRust', () => {
+      return { title: 'Building Pipeline', color: 'primary' as const }
+    })
+    .with('Success', () => {
+      return { title: 'Ready', color: 'success' as const }
+    })
+    .with('None', () => {
+      return { title: 'Unused', color: 'primary' as const }
+    })
     .exhaustive()
 
 const TableSqlPrograms = () => {
