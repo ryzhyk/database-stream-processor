@@ -34,8 +34,7 @@ import SaveIndicator, { SaveIndicatorState } from 'src/components/SaveIndicator'
 // How many ms to wait until we save the project.
 const SAVE_DELAY = 2000
 
-// The errors we can have on the form. We only have a problem if the name is not
-// unique.
+// The error format for the editor form.
 interface FormError {
   name?: { message?: string }
 }
