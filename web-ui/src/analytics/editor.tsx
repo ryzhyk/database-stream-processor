@@ -119,7 +119,6 @@ const stateToEditorLabel = (state: SaveIndicatorState): string =>
     .with('isUpToDate' as const, () => {
       return 'Saved'
     })
-
     .exhaustive()
 
 // Watches for changes to the form and saves them as a new project (if we don't
@@ -244,38 +243,36 @@ const useUpdateProjectIfChanged = (
     ProjectService.updateProject
   )
   useEffect(() => {
-    if (project.project_id !== null) {
-      if (state === 'isModified' && !isLoading) {
-        mutate(
-          {
-            project_id: project.project_id,
-            name: project.name,
-            description: project.description,
-            code: project.code
+    if (project.project_id !== null && state === 'isModified' && !isLoading) {
+      mutate(
+        {
+          project_id: project.project_id,
+          name: project.name,
+          description: project.description,
+          code: project.code
+        },
+        {
+          onSuccess: (data: UpdateProjectResponse) => {
+            setProject((prevState: ProgramState) => ({ ...prevState, version: data.version }))
+            setState('isUpToDate')
+            queryClient.invalidateQueries(['project'])
+            queryClient.invalidateQueries(['projectCode', { project_id: project.project_id }])
+            queryClient.invalidateQueries(['projectStatus', { project_id: project.project_id }])
+            setFormError({})
           },
-          {
-            onSuccess: (data: UpdateProjectResponse) => {
-              setProject((prevState: ProgramState) => ({ ...prevState, version: data.version }))
-              setState('isUpToDate')
-              queryClient.invalidateQueries(['project'])
-              queryClient.invalidateQueries(['projectCode', { project_id: project.project_id }])
-              queryClient.invalidateQueries(['projectStatus', { project_id: project.project_id }])
-              setFormError({})
-            },
-            onError: (error: CancelError) => {
-              // TODO: would be good to have error codes from the API
-              if (error.message.includes('name already exists')) {
-                setFormError({ name: { message: 'This name already exists. Enter a different name.' } })
-                // This won't try to save again, but set the save indicator to
-                // Saving... until the user changes something:
-                setState('isDebouncing')
-              } else {
-                pushMessage({ message: error.message, key: new Date().getTime(), color: 'error' })
-              }
+          onError: (error: CancelError) => {
+            // TODO: would be good to have error codes from the API
+            if (error.message.includes('name already exists')) {
+              setFormError({ name: { message: 'This name already exists. Enter a different name.' } })
+              // This won't try to save again, but set the save indicator to
+              // Saving... until the user changes something:
+              setState('isDebouncing')
+            } else {
+              pushMessage({ message: error.message, key: new Date().getTime(), color: 'error' })
             }
           }
-        )
-      }
+        }
+      )
     }
   }, [
     mutate,
