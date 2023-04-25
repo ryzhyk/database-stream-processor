@@ -15,10 +15,7 @@ export const ErrorOverlay = (props: ErrorProps) => {
         <AlertTitle>Error</AlertTitle>
         Can't display programs: <strong>{props.error.message}</strong>
         <br />
-        Check network connectivity,{' '}
-        <Link href='#' underline='always'>
-          then try again
-        </Link>
+        Check network connectivity, then try to refresh the page.
         .
       </Alert>
     )
