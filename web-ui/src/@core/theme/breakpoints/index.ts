@@ -1,4 +1,3 @@
-
 // Breakpoints for the layout.
 //
 // See also: https://mui.com/material-ui/customization/breakpoints/

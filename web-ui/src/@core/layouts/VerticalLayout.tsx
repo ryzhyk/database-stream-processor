@@ -75,7 +75,6 @@ const VerticalLayout = (props: LayoutProps) => {
 
           {/* Footer Component */}
           <Footer {...props} />
-
         </MainContentWrapper>
       </VerticalLayoutWrapper>
 
