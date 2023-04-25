@@ -11,6 +11,7 @@ import useNodeDelete from '../hooks/useNodeDelete'
 import Chip from '@mui/material/Chip'
 import Avatar from '@mui/material/Avatar'
 import { Icon } from '@iconify/react'
+import { zip } from 'src/utils'
 
 function SqlTableNode(props: { name: string }) {
   const { getNode, getEdges } = useReactFlow()
@@ -91,8 +92,6 @@ function SqlViewNode(props: { name: string }) {
     </Box>
   )
 }
-
-const zip = (a: any, b: any) => Array.from(Array(Math.max(b.length, a.length)), (_, i) => [a[i], b[i]])
 
 function SqlNode({ id, data }: NodeProps) {
   const onDelete = useNodeDelete(id)
